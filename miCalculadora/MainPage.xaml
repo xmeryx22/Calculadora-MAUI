@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="miCalculadora.MainPage"
+             BackgroundColor="#231E57">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="TeclaBase" TargetType="Button">
+                <Setter Property="TextColor" Value="#F5F5FF" />
+                <Setter Property="FontSize" Value="26" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="22" />
+                <Setter Property="BorderWidth" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="MinimumHeightRequest" Value="0" />
+                <Setter Property="MinimumWidthRequest" Value="0" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.94" />
+                                    <Setter Property="Opacity" Value="0.85" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="PointerOver" />
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="TeclaNumero" TargetType="Button" BasedOn="{StaticResource TeclaBase}">
+                <Setter Property="BackgroundColor" Value="#35326B" />
+            </Style>
+
+            <Style x:Key="TeclaOperador" TargetType="Button" BasedOn="{StaticResource TeclaBase}">
+                <Setter Property="BackgroundColor" Value="#7F5AF0" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="30" />
+            </Style>
+
+            <Style x:Key="TeclaIgual" TargetType="Button" BasedOn="{StaticResource TeclaBase}">
+                <Setter Property="BackgroundColor" Value="#00D1B2" />
+                <Setter Property="TextColor" Value="#1B1840" />
+                <Setter Property="FontSize" Value="32" />
+            </Style>
+
+            <Style x:Key="TeclaBorrar" TargetType="Button" BasedOn="{StaticResource TeclaBase}">
+                <Setter Property="BackgroundColor" Value="#FF5E62" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+
+            <Style x:Key="TeclaMemoria" TargetType="Button" BasedOn="{StaticResource TeclaBase}">
+                <Setter Property="BackgroundColor" Value="#24305E" />
+                <Setter Property="TextColor" Value="#7DF9FF" />
+                <Setter Property="FontSize" Value="17" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,24,20,20" Spacing="14">
+
+            <Label Text="Calculadora"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#F5F5FF"
+                   HorizontalOptions="Start" />
+
+            <Border BackgroundColor="#12102E"
+                    Stroke="#7F5AF0"
+                    StrokeThickness="2"
+                    Padding="20,10"
+                    HeightRequest="110">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="28" />
+                </Border.StrokeShape>
+
+                <Label x:Name="labelResultado"
+                       Text="0"
+                       FontSize="44"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="Center" />
+            </Border>
+
+            <Border BackgroundColor="#24305E"
+                    Stroke="Transparent"
+                    Padding="14,5"
+                    HorizontalOptions="End">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14" />
+                </Border.StrokeShape>
+                <Label x:Name="labelMemoria"
+                       Text="Mem: 0"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="#7DF9FF" />
+            </Border>
+
+            <Grid RowSpacing="12" ColumnSpacing="12" Margin="0,4,0,0"
+                  RowDefinitions="64,64,64,64,64"
+                  ColumnDefinitions="*,*,*,*,*">
+
+                <!-- Primera fila -->
+                <Button 
+                    Text="C" 
+                    Style="{StaticResource TeclaBorrar}" 
+                    Grid.Row="0"
+                    Grid.Column="0" 
+                    Clicked="OnClearClicked" />
+                <Button 
+                    Text="=" 
+                    Style="{StaticResource TeclaIgual}" 
+                    Grid.Row="0" 
+                    Grid.Column="3" 
+                    Grid.ColumnSpan="2" 
+                    Clicked="OnIgualClicked"/>
+
+                <!-- Segunda fila -->
+                <Button 
+                    Text="MC" 
+                    Style="{StaticResource TeclaMemoria}" 
+                    Grid.Row="1" 
+                    Grid.Column="0" 
+                    Clicked="OnMemoriaClicked"/>
+                <Button 
+                    Text="7" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="1" 
+                    Grid.Column="1" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="8" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="1" 
+                    Grid.Column="2" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="9" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="1" 
+                    Grid.Column="3" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="/" 
+                    Style="{StaticResource TeclaOperador}" 
+                    Grid.Row="1" 
+                    Grid.Column="4" 
+                    Clicked="OnOperadorClicked"/>
+
+                <!-- Tercera fila -->
+                <Button 
+                    Text="M+" 
+                    Style="{StaticResource TeclaMemoria}" 
+                    Grid.Row="2" 
+                    Grid.Column="0" 
+                    Clicked="OnMemoriaClicked" />
+                <Button 
+                    Text="4" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="2" 
+                    Grid.Column="1" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="5" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="2" 
+                    Grid.Column="2" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="6" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="2" 
+                    Grid.Column="3" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="*" 
+                    Style="{StaticResource TeclaOperador}" 
+                    Grid.Row="2" 
+                    Grid.Column="4" 
+                    Clicked="OnOperadorClicked"/>
+
+                <!-- Cuarta fila -->
+                <Button 
+                    Text="M-" 
+                    Style="{StaticResource TeclaMemoria}" 
+                    Grid.Row="3" 
+                    Grid.Column="0" 
+                    Clicked="OnMemoriaClicked" />
+                <Button 
+                    Text="1" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="3" 
+                    Grid.Column="1" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="2" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="3" 
+                    Grid.Column="2" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="3" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="3" 
+                    Grid.Column="3" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="-" 
+                    Style="{StaticResource TeclaOperador}" 
+                    Grid.Row="3" 
+                    Grid.Column="4" 
+                    Clicked="OnOperadorClicked"/>
+
+                <!-- Última fila -->
+                <Button 
+                    Text="M" 
+                    Style="{StaticResource TeclaMemoria}" 
+                    Grid.Row="4" 
+                    Grid.Column="0" 
+                    Clicked="OnMemoriaClicked"/>
+                <Button 
+                    Text="0" 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="4" 
+                    Grid.Column="1" 
+                    Grid.ColumnSpan="2" 
+                    Clicked="OnNumeroClicked"/>
+                <Button 
+                    Text="," 
+                    Style="{StaticResource TeclaNumero}" 
+                    Grid.Row="4" 
+                    Grid.Column="3" 
+                    Clicked="OnComaClicked"/>
+                <Button 
+                    Text="+" 
+                    Style="{StaticResource TeclaOperador}" 
+                    Grid.Row="4" 
+                    Grid.Column="4" 
+                    Clicked="OnOperadorClicked"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+
+
+
